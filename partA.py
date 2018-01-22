@@ -39,11 +39,17 @@ def vigenere(alphabet, key, plaintext, mode='encrypt'):
 ### ARGUMENTS
 alphabet = 'abcdefghijklmnopqrstuvwxyzåäö ,.'
 key = 'melons'
-plaintext = 'big bananas are best for eating, small bananas are best for cakes..'
+plaintext = 'Big Bananas Are best for eating, small bananas are best for cakes ~ @#.'
+
+#Convert the uppercase to lowercase for encryption
+plainTextlower = plaintext.lower()
+
+#Delete Unsupported characters
+plainTextlower = plainTextlower.translate(None,''.join(set(plainTextlower).difference(alphabet)))
 
 ### RUN ALGORITHM
-print('PLAINTEXT: # ', plaintext, ' #')
-ciphertext = vigenere(alphabet, key, plaintext)
+print('PLAINTEXT: # ', plainTextlower, ' #')
+ciphertext = vigenere(alphabet, key, plainTextlower)
 print('Encrypting...')
 print('CIPHERTEXT: # ', ciphertext, ' #')
 print('Decrypting...')
@@ -51,4 +57,4 @@ decrypted_text = vigenere(alphabet, key, ciphertext, mode='decrypt')
 print('DECRYPTED TEXT: # ', decrypted_text, ' #')
 
 # Unit Test:
-print('Algorithm works: ', plaintext == decrypted_text)
+print('Algorithm works: ', plainTextlower == decrypted_text)
