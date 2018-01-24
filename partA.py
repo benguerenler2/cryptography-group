@@ -36,20 +36,24 @@ def vigenere(alphabet, key, plaintext, mode='encrypt'):
     # return a string format, and remove the padding so that the return is consistent with input.
     return ''.join(c_arr[:(len(c_arr)-padding)])
 
+def checkUnsupportedChars(plaintxt):
+    #Convert the uppercase to lowercase for encryption
+    plainTextlower = plaintxt.lower()
+
+    #Delete Unsupported characters
+    plainTextlower = plainTextlower.translate(None,''.join(set(plainTextlower).difference(alphabet)))
+    return plainTextlower
+
+
 ### ARGUMENTS
 alphabet = 'abcdefghijklmnopqrstuvwxyzåäö ,.'
 key = 'melons'
 plaintext = 'Big Bananas Are best for eating, small bananas are best for cakes ~ @#.'
-
-#Convert the uppercase to lowercase for encryption
-plainTextlower = plaintext.lower()
-
-#Delete Unsupported characters
-plainTextlower = plainTextlower.translate(None,''.join(set(plainTextlower).difference(alphabet)))
+plaintext = checkUnsupportedChars(plaintext)
 
 ### RUN ALGORITHM
-print('PLAINTEXT: # ', plainTextlower, ' #')
-ciphertext = vigenere(alphabet, key, plainTextlower)
+print('PLAINTEXT: # ', plaintext, ' #')
+ciphertext = vigenere(alphabet, key, plaintext)
 print('Encrypting...')
 print('CIPHERTEXT: # ', ciphertext, ' #')
 print('Decrypting...')
@@ -57,4 +61,4 @@ decrypted_text = vigenere(alphabet, key, ciphertext, mode='decrypt')
 print('DECRYPTED TEXT: # ', decrypted_text, ' #')
 
 # Unit Test:
-print('Algorithm works: ', plainTextlower == decrypted_text)
+print('Algorithm works: ', plaintext == decrypted_text)
